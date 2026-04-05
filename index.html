@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dsts.vis</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/visualizer.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext x='18' y='28' text-anchor='middle' font-size='28' font-family='monospace' fill='red'%3E*%3C/text%3E%3Ctext x='46' y='28' text-anchor='middle' font-size='28' font-family='monospace' fill='red'%3E*%3C/text%3E%3Ctext x='18' y='56' text-anchor='middle' font-size='28' font-family='monospace' fill='red'%3E*%3C/text%3E%3Ctext x='46' y='56' text-anchor='middle' font-size='28' font-family='monospace' fill='red'%3E*%3C/text%3E%3C/svg%3E"/>
+</head>
+<body>
+    <div id="visualizer-container">
+        <canvas id="dot-canvas"></canvas>
+        <div id="bottom-left-controls" class="fade-group" style="display:none;">
+            <span id="song-name" class="thin fade-item"></span>
+            <div id="player-controls" class="fade-item">
+                <button id="prev-btn" class="thin" title="previous" aria-label="previous">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="15,4 7,11 15,18" fill="#fff"/><rect x="5" y="4" width="2" height="14" fill="#fff"/></svg>
+                </button>
+                <button id="play-pause-btn" class="thin" title="play/pause" aria-label="play/pause">
+                    <svg id="play-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,11 5,19" fill="#fff"/></svg>
+                    <svg id="pause-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;"><rect x="5" y="3" width="4" height="16" fill="#fff"/><rect x="13" y="3" width="4" height="16" fill="#fff"/></svg>
+                </button>
+                <button id="next-btn" class="thin" title="next" aria-label="next">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="7,4 15,11 7,18" fill="#fff"/><rect x="15" y="4" width="2" height="14" fill="#fff"/></svg>
+                </button>
+                <button id="tracklist-btn" class="thin" title="track list" aria-label="track list">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="14" height="2" fill="#fff"/><rect x="4" y="10" width="14" height="2" fill="#fff"/><rect x="4" y="14" width="10" height="2" fill="#fff"/></svg>
+                </button>
+                <button id="fullscreen-btn" class="thin" title="fullscreen" aria-label="fullscreen">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="5" height="2" fill="#fff"/><rect x="3" y="3" width="2" height="5" fill="#fff"/><rect x="14" y="3" width="5" height="2" fill="#fff"/><rect x="19" y="3" width="2" height="5" fill="#fff"/><rect x="3" y="17" width="5" height="2" fill="#fff"/><rect x="3" y="14" width="2" height="5" fill="#fff"/><rect x="14" y="17" width="5" height="2" fill="#fff"/><rect x="19" y="14" width="2" height="5" fill="#fff"/></svg>
+                </button>
+            </div>
+        </div>
+        <label id="custom-file-label" for="audio-file">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+            </svg>
+        </label>
+        <input type="file" id="audio-file" accept="audio/*" multiple style="display:none;">
+        <audio id="audio-player"></audio>
+    </div>
+    <div id="custom-clock-overlay" style="position:fixed;top:24px;right:32px;z-index:10001;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none;"></div>
+    <script type="module" src="js/boot.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/audio.js"></script>
+    <script type="module" src="js/dotVisualizer.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/clock.js"></script>
+    <!-- Track list modal -->
+    <div id="tracklist-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:10000;align-items:center;justify-content:center;flex-direction:column;">
+        <div style="background:#181818;padding:32px 24px 24px 24px;border-radius:18px;min-width:320px;max-width:90vw;max-height:80vh;overflow-y:auto;box-shadow:0 4px 32px #000a;display:flex;flex-direction:column;align-items:center;">
+            <h2 style="color:#fff;font-family:Montserrat,Arial,sans-serif;font-weight:100;font-size:1.3em;margin:0 0 18px 0;text-transform:lowercase;">track list</h2>
+            <ul id="tracklist-ul" style="list-style:none;padding:0;margin:0;width:100%;color:#fff;font-family:monospace;font-size:1.1em;"></ul>
+            <button id="close-tracklist-btn" class="thin" style="margin-top:18px;">close</button>
+        </div>
+    </div>
+</body>
+</html>
